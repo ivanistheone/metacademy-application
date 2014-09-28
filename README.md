@@ -8,8 +8,7 @@ This source is licensed under GPLv3, see [LICENSE.txt](LICENSE.txt) (Note: Metac
 
 ## Demo
 
-Metacademy is live at http://www.metacademy.org.
-
+Metacademy is live at [metacademy.org](http://www.metacademy.org). 
 
 ## Installation
 
@@ -18,6 +17,9 @@ For Windows installation/requirements, please see the README located in [/window
 
 
 ### Preliminary requirements
+
+Before you get started, make sure you have all the software prerequisites.
+
 * `Python 2.7.X` *Nota bene*: install `python-devel`/`python-dev` if you're using a package manager such as `yum` or `apt-get`. The following command should then print a path. If this command raises an exception, make sure that you have `python-devel`/`-dev` for your installed version of python installed:
 
         python -c 'from distutils.sysconfig import get_makefile_filename as m; print m()'
@@ -35,6 +37,7 @@ For Windows installation/requirements, please see the README located in [/window
         node -v
 
 
+
 ### Mac OS X and *nix
 
 1. Create an empty top-level Metacademy directory in a desired location, e.g. `mkdir -p ~/MyProjects/metacademy`.
@@ -42,15 +45,20 @@ For Windows installation/requirements, please see the README located in [/window
 > It will be used for (1) the actual application, (2) storing the database and (3) the respective virtual Python environment.
 
 2. Go to the top-level Metacademy directory `cd ~/MyProjects/metacademy`
-3. From your top-level Metacademy directory, clone the application repo:
+3. Create a python virtual env and `activate` it using the following commands
+
+        virtualenv meta_venv
+        source ./meta_venv/bin/activate
+
+4. From your top-level Metacademy directory, clone the application repo:
 
         git clone https://github.com/metacademy/metacademy-application.git
 
-4. Go to the `metacademy-application` directory
+5. Go to the `metacademy-application` directory
 
         cd metacademy-application
 
-5. Install the Metacademy application (Note: this project uses a [virtual environment](http://www.virtualenv.org/en/latest/) for development):
+6. Install the Metacademy application (Note: the `Makefile` assumes the [virtualenv](http://www.virtualenv.org/en/latest/) `../meta_venv` exists):
 
         make
 
@@ -58,44 +66,63 @@ For Windows installation/requirements, please see the README located in [/window
 
     > Your Metacademy project directory now also contains the `local_dbs` and `meta_venv` directories.
 
-6. Verify the installation
+7. Verify the installation
 
         make test
 
 ---
 
-## Optional
 
-The following tasks are not neccessarily needed to run Metacademy.
 
-### Create a Django superuser
 
-A Django superuser will allow you to login at `/admin` to perform additional management tasks.
 
-Given you are still in the `metacademy-application` directory, activate the virtual environment first.
+## Administration details
+
+The following tasks are are associated with running the Metacademy server.
+
+### Activating the `meta_venv` virtual env:
+
+In order to use the python packages in the `meta_venv` virtualenv, you must activate it using:
 
     source ../meta_venv/bin/activate
 
-Then create the Django superuser.
-
-    python app_server/manage.py createsuperuser
+> assuming you're in the `metacademy-application` directory 
 
 You can leave the virtual environment again simply by invoking
 
     deactivate
 
-## Very Optional
 
-### Install `numpy` and `pandas` manually
-They are needed for some legacy/aux function calls.
+### Create a Django superuser
+
+A Django superuser will allow you to login at `/admin` to perform additional management tasks.
+Go to the `metacademy-application` directory and enter:
+
+    python app_server/manage.py createsuperuser
+
+The script will ask you for the username, email, and password,
+which will be your login to the website.
+
+
+### Import `metacademy-content` content
+
+
+### Export content as flatfile database
+
+
+
+
+### Install `numpy` and `pandas` manually (optional)
+
+These are needed for some legacy/aux function calls.
 
 > **Note:** These dependencies should already be part of the *virtual environment* by running `make` above. Make sure to activate the virtual environment before continuing.
 
     pip install numpy
-
     pip install pandas
 
-### Install `scipy` dependency
+
+### Install `scipy` dependency (optional)
 
 Some of Metacademy's ancillary functions currently depend on `scipy`. Scipy can be tricky to install, so we have made it an optional dependency. `pip install scipy` won't work unless you have all of the system-level dependencies.
 
@@ -113,7 +140,12 @@ or still from within the `metacademy-application` directory on a 64 bit RHEL-bas
 
 ---
 
-## Execution
+
+
+
+
+
+# Running the server 
 
 ### Mac OS X and *nix
 
@@ -130,3 +162,5 @@ or still from within the `metacademy-application` directory on a 64 bit RHEL-bas
 > Note: The initial search may take some time while the backend loads the graph into memory, but all subsequent pages should load much quicker.
 
 If you have any problems with this installation, please submit an issue at [https://github.com/metacademy/metacademy-application/issues?state=open](https://github.com/metacademy/metacademy-application/issues?state=open).
+
+
